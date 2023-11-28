@@ -3,7 +3,7 @@ import sys
 import pygame as pg
 
 
-WIDTH, HEIGHT = 1600, 900
+WIDTH, HEIGHT = 1200, 650
 
 delta = {  # 練習３：押下キーと移動量の辞書
     pg.K_UP: (0, -5),  # キー：移動量／値：（横方向移動量，縦方向移動量）
@@ -50,6 +50,10 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+            
+        if kk_rct.colliderect(bb_rct):
+            print("Game Over")
+            return    
             
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
