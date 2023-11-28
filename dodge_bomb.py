@@ -7,11 +7,14 @@ WIDTH, HEIGHT = 1200, 650
 
 delta = {  # 練習３：押下キーと移動量の辞書
     pg.K_UP: (0, -5),  # キー：移動量／値：（横方向移動量，縦方向移動量）
+    #pg.K_UPLEFT: (+5, -5),
     pg.K_DOWN: (0, +5),
     pg.K_LEFT: (-5, 0),
     pg.K_RIGHT: (+5, 0)
 }
 
+
+                 
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     """
@@ -33,7 +36,10 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+    kk_img_8 = pg.image.load("ex02/fig/8.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img_8 = pg.transform.rotozoom(kk_img, 8,2.0)
+    kk_img_8 = pg.Surface((20,20))
     kk_rct = kk_img.get_rect()  # 練習３：こうかとんSurfaceのRectを抽出する
     kk_rct.center = 900, 400  # 練習３：こうかとんの初期座標
     bb_img = pg.Surface((20, 20))   # 練習１：透明のSurfaceを作る
@@ -46,14 +52,26 @@ def main():
 
     clock = pg.time.Clock()
     tmr = 0
+    
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
-            
+            if event.type == pg.K_UP:
+                screen.blit(kk_img_1)
+                return
+                
         if kk_rct.colliderect(bb_rct):
+            
+            pg.display.update()
+            screen.blit(kk_img_8)
+            
+            clock = pg.time.Clock()
+            clock.tick(1)
             print("Game Over")
-            return    
+            return
+        
+           
             
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
@@ -61,9 +79,11 @@ def main():
             if key_lst[k]:  # キーが押されたら
                 sum_mv[0] += tpl[0]
                 sum_mv[1] += tpl[1]
+
         
 
         screen.blit(bg_img, [0, 0])
+        #Sscreen.blit(kk_img,[0,0])
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
@@ -86,3 +106,6 @@ if __name__ == "__main__":
     main()
     pg.quit()
     sys.exit()
+
+#if key_lst[pg.K_UP]: 
+    #kk_rct = pg.transform.rotozoom(kk_rct 
