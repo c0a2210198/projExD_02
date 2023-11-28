@@ -12,7 +12,13 @@ delta = {  # 練習３：押下キーと移動量の辞書
     pg.K_RIGHT: (+5, 0)
 }
 
-
+def check_bound(rct):
+    """
+    オブジェクトが画面内or画面外を判定し、真理値タプルを返す関数
+    引数rct：こうかとんor爆弾surfaceのRect
+    戻り値：横方向はみ出し判定結果（画面内：True/画面外：False）
+    """
+    
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
